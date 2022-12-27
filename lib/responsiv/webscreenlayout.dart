@@ -1,8 +1,10 @@
-import 'package:fitsta/utilities/colors.dart';
-import 'package:fitsta/utilities/global_varibles.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:easy_sidemenu/easy_sidemenu.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitsta/screen/feed_screen.dart';
+import 'package:fitsta/screen/profil_screen.dart';
+import 'package:fitsta/screen/search_screen.dart';
+import 'package:fitsta/screen/training.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class WebScreenLayout extends StatefulWidget {
   const WebScreenLayout({Key? key}) : super(key: key);
@@ -12,95 +14,232 @@ class WebScreenLayout extends StatefulWidget {
 }
 
 class _WebScreenLayoutState extends State<WebScreenLayout> {
-  int _page = 0;
-  late PageController pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    pageController.dispose();
-  }
-
-  void navigationTapped(int page) {
-    pageController.jumpToPage(page);
-  }
-
-  void onPageChanged(int page) {
+  onItemTapped(int index) {
     setState(() {
-      _page = page;
+      // _selectedIndex = index;
     });
   }
+
+  Widget getPage(int index) {
+    switch (index) {
+      case 0:
+        return const FeedScreen();
+
+      case 1:
+        return const SearchScreen();
+
+      // case 2:
+      //   return const AddPostScreen();
+
+      case 2:
+        return const Trainingspage();
+      case 3:
+        return ProfileScreen(
+          uid: FirebaseAuth.instance.currentUser!.uid,
+        );
+
+      default:
+        return Container();
+    }
+  }
+
+  PageController page = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: mobileBackgroundColor,
-        centerTitle: false,
-        title: SvgPicture.asset(
-          "lib/assets/ic_instagram.svg",
-          color: primaryColor,
-          height: 32,
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.add_a_photo),
+      appBar: AppBar(),
+      backgroundColor: Colors.teal,
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SideMenu(
+            controller: page,
+            style: SideMenuStyle(
+                // showTooltip: false,
+                displayMode: SideMenuDisplayMode.auto,
+                hoverColor: Colors.blue[100],
+                selectedColor: Colors.lightBlue,
+                selectedTitleTextStyle: const TextStyle(color: Colors.white),
+                selectedIconColor: Colors.white,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                ),
+                backgroundColor: Colors.blueGrey[700]),
+            title: Column(
+              children: [
+                ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxHeight: 150,
+                    maxWidth: 150,
+                  ),
+                  child: Image.asset(
+                    'assets/images/easy_sidemenu.png',
+                  ),
+                ),
+                const Divider(
+                  indent: 8.0,
+                  endIndent: 8.0,
+                ),
+              ],
+            ),
+            footer: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'FitSta',
+                style: TextStyle(fontSize: 15),
+              ),
+            ),
+            items: [
+              SideMenuItem(
+                priority: 0,
+                title: 'Dashboard',
+                onTap: () {
+                  page.jumpToPage(0);
+                },
+                icon: const Icon(Icons.home),
+                badgeContent: const Text(
+                  '3',
+                  style: TextStyle(color: Colors.white),
+                ),
+                tooltipContent: "This is a tooltip for Dashboard item",
+              ),
+              SideMenuItem(
+                priority: 1,
+                title: 'Users',
+                onTap: () {
+                  page.jumpToPage(1);
+                },
+                icon: const Icon(Icons.supervisor_account),
+              ),
+              SideMenuItem(
+                priority: 2,
+                title: 'Files',
+                onTap: () {
+                  page.jumpToPage(2);
+                },
+                icon: const Icon(Icons.file_copy_rounded),
+                trailing: Container(
+                    decoration: const BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.all(Radius.circular(6))),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 6.0, vertical: 3),
+                      child: Text(
+                        'New',
+                        style: TextStyle(fontSize: 11, color: Colors.grey[800]),
+                      ),
+                    )),
+              ),
+              SideMenuItem(
+                priority: 3,
+                title: 'Download',
+                onTap: () {
+                  page.jumpToPage(3);
+                },
+                icon: const Icon(Icons.download),
+              ),
+              SideMenuItem(
+                priority: 4,
+                title: 'Settings',
+                onTap: () {
+                  page.jumpToPage(4);
+                },
+                icon: const Icon(Icons.settings),
+              ),
+              // SideMenuItem(
+              //   priority: 5,
+              //   onTap: () {
+              //     page.jumpToPage(5);
+              //   },
+              //   icon: const Icon(Icons.image_rounded),
+              // ),
+              // SideMenuItem(
+              //   priority: 6,
+              //   title: 'Only Title',
+              //   onTap: () {
+              //     page.jumpToPage(6);
+              //   },
+              // ),
+              const SideMenuItem(
+                priority: 7,
+                title: 'Exit',
+                icon: Icon(Icons.exit_to_app),
+              ),
+            ],
+          ),
+          Expanded(
+            child: PageView(
+              controller: page,
+              children: [
+                Container(
+                  color: Colors.white,
+                  child: const Center(
+                    child: Text(
+                      'Dashboard',
+                      style: TextStyle(fontSize: 35, color: Colors.black),
+                    ),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: const Center(
+                    child: Text(
+                      'Users',
+                      style: TextStyle(fontSize: 35, color: Colors.black),
+                    ),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: const Center(
+                    child: Text(
+                      'Files',
+                      style: TextStyle(fontSize: 35, color: Colors.black),
+                    ),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: const Center(
+                    child: Text(
+                      'Download',
+                      style: TextStyle(fontSize: 35, color: Colors.black),
+                    ),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: const Center(
+                    child: Text(
+                      'Settings',
+                      style: TextStyle(fontSize: 35, color: Colors.black),
+                    ),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: const Center(
+                    child: Text(
+                      'Only Title',
+                      style: TextStyle(fontSize: 35, color: Colors.black),
+                    ),
+                  ),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: const Center(
+                    child: Text(
+                      'Only Icon',
+                      style: TextStyle(fontSize: 35, color: Colors.black),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
-      ),
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        onPageChanged: onPageChanged,
-        children: homeScreenItems,
-      ),
-      bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: webBackgroundColor,
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home,
-                color: _page == 0 ? primaryColor : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: primaryColor),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-                color: _page == 1 ? primaryColor : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: primaryColor),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.add_circle,
-                color: _page == 2 ? primaryColor : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: primaryColor),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.favorite,
-                color: _page == 3 ? primaryColor : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: primaryColor),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person,
-                color: _page == 4 ? primaryColor : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: primaryColor),
-        ],
-        onTap: navigationTapped,
       ),
     );
   }
