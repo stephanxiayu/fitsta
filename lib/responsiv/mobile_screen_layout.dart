@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitsta/resurces/auth_methode.dart';
 import 'package:fitsta/screen/add_post_screen.dart';
 import 'package:fitsta/screen/feed_screen.dart';
+import 'package:fitsta/screen/login_screen.dart';
 import 'package:fitsta/screen/profil_screen.dart';
 import 'package:fitsta/screen/search_screen.dart';
 import 'package:fitsta/screen/training.dart';
@@ -31,12 +33,12 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
       case 1:
         return const SearchScreen();
 
-      case 2:
-        return const AddPostScreen();
+      // case 2:
+      //   return const AddPostScreen();
 
-      case 3:
+      case 2:
         return const Trainingspage();
-      case 4:
+      case 3:
         return ProfileScreen(
           uid: FirebaseAuth.instance.currentUser!.uid,
         );
@@ -50,47 +52,58 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.teal,
         title: const Text("App Bar Page"),
         actions: [
-          IconButton(
-              onPressed: (() {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AddPostScreen()));
-              }),
-              icon: const Icon(Icons.add_a_photo))
+          _selectedIndex == 3
+              ? IconButton(
+                  onPressed: () async {
+                    AuthMethode().signOut().then((value) =>
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const LoginScreen())));
+                  },
+                  icon: const Icon(Icons.exit_to_app))
+              : IconButton(
+                  onPressed: (() {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AddPostScreen()));
+                  }),
+                  icon: const Icon(Icons.add_a_photo))
         ],
       ),
       body: getPage(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 9,
-        currentIndex: _selectedIndex,
-        backgroundColor: Colors.teal,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: Card(
+          elevation: 9,
+          child: BottomNavigationBar(
+            elevation: 9,
+            currentIndex: _selectedIndex,
             backgroundColor: Colors.teal,
-            icon: Icon(Icons.home),
-            label: 'Home',
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                backgroundColor: Colors.teal,
+                icon: Icon(Icons.home),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.search),
+                label: 'Search',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.sports_volleyball_sharp),
+                label: 'Training',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profil',
+              ),
+            ],
+            onTap: onItemTapped,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'School',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.sports_volleyball_sharp),
-            label: 'Training',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profil',
-          ),
-        ],
-        onTap: onItemTapped,
+        ),
       ),
     );
   }

@@ -96,8 +96,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   buildStatColumen(postLen, 'posts'),
-                                  buildStatColumen(followers, 'followers'),
-                                  buildStatColumen(following, 'following'),
+                                  buildStatColumen(followers, 'Followers'),
+                                  buildStatColumen(following, 'ich folge'),
                                 ],
                               ),
                               Row(
@@ -106,24 +106,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 children: [
                                   FirebaseAuth.instance.currentUser!.uid ==
                                           widget.uid
-                                      ? FollowButton(
-                                          text: 'Sign Out',
-                                          backgroundColor:
-                                              mobileBackgroundColor,
-                                          textColor: primaryColor,
-                                          borderColor: Colors.grey,
-                                          function: () async {
-                                            await AuthMethode().signOut();
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const LoginScreen()));
-                                          },
-                                        )
+                                      ? const SizedBox()
                                       : isFollowing
                                           ? FollowButton(
-                                              text: 'Unfollow',
-                                              backgroundColor: Colors.white,
+                                              text: 'entfolgen',
+                                              backgroundColor:
+                                                  Colors.tealAccent,
                                               textColor: Colors.black12,
                                               borderColor: Colors.grey,
                                               function: () async {
