@@ -6,6 +6,7 @@ import 'package:fitsta/resurces/firestore_methodes.dart';
 import 'package:fitsta/screen/comment_screen.dart';
 import 'package:fitsta/utilities/colors.dart';
 import 'package:fitsta/utilities/utilities.dart';
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:fitsta/model/user.dart';
@@ -47,6 +48,7 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
+    const webScreenSize = 600;
     final User user = Provider.of<UserProvider>(context).getUser;
     return Container(
       color: mobileBackgroundColor,
@@ -124,11 +126,13 @@ class _PostCardState extends State<PostCard> {
             },
             child: Stack(alignment: Alignment.center, children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.35,
+                height: kIsWeb
+                    ? MediaQuery.of(context).size.height * 0.6
+                    : MediaQuery.of(context).size.height * 0.35,
                 width: double.infinity,
                 child: Image.network(
-                  widget.snap['postUrl'],
-                  fit: BoxFit.cover,
+                  widget.snap['photoUrl'],
+                  fit: kIsWeb ? BoxFit.cover : BoxFit.cover,
                 ),
               ),
               AnimatedOpacity(

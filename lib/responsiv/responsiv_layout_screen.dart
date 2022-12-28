@@ -1,5 +1,5 @@
 import 'package:fitsta/providers/user_provider.dart';
-import 'package:fitsta/utilities/global_varibles.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -33,7 +33,7 @@ class _ResponsiveLayoutState extends State<ResponsiveLayout> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth > webScreenSize) {
+        if (kIsWeb) {
           return widget.webScreenLayout;
         }
         return widget.mobileScreenLayout;

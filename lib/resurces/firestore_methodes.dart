@@ -9,13 +9,8 @@ import 'package:uuid/uuid.dart';
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<String> uploadPost(
-    String description,
-    Uint8List file,
-    String uid,
-    String username,
-    String proImage,
-  ) async {
+  Future<String> uploadPost(String description, Uint8List file, String uid,
+      String username, String proImage, String profImage) async {
     String res = "some error occurred";
 
     try {
@@ -31,8 +26,10 @@ class FirestoreMethods {
           postId: postId,
           datePublished: DateTime.now(),
           postUrl: photoUrl,
-          profImage: photoUrl,
+          photoUrl: photoUrl,
+          profImage: profImage,
           likes: []);
+
       res = 'success';
 
       _firestore.collection('posts').doc(postId).set(post.toJason());

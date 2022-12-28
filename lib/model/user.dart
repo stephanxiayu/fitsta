@@ -7,39 +7,38 @@ class User {
   final String bio;
   final List followers;
   final List following;
-  final String photoUrl;
 
-  const User({
-    required this.username,
-    required this.uid,
-    required this.email,
-    required this.bio,
-    required this.followers,
-    required this.following,
-    required this.photoUrl,
-  });
+  final String profImage;
+
+  const User(
+      {required this.username,
+      required this.uid,
+      required this.email,
+      required this.bio,
+      required this.followers,
+      required this.following,
+      required this.profImage});
 
   Map<String, dynamic> toJason() => {
         "username": username,
         "uid": uid,
         "email": email,
-        "photoUrl": photoUrl,
         "bio": bio,
         "followers": followers,
         "following": following,
+        "profImage": profImage,
       };
 
   static User fromSnap(DocumentSnapshot snap) {
     var snapshot = snap.data() as Map<String, dynamic>;
 
     return User(
-      username: snapshot['username'],
-      uid: snapshot['uid'],
-      email: snapshot['email'],
-      photoUrl: snapshot['photoUrl'],
-      bio: snapshot['bio'],
-      followers: snapshot['followers'],
-      following: snapshot['following'],
-    );
+        username: snapshot['username'],
+        uid: snapshot['uid'],
+        email: snapshot['email'],
+        bio: snapshot['bio'],
+        followers: snapshot['followers'],
+        following: snapshot['following'],
+        profImage: snapshot['profImage']);
   }
 }

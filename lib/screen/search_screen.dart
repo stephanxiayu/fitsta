@@ -28,14 +28,18 @@ class _SearchScreenState extends State<SearchScreen> {
       children: [
         Expanded(
           flex: 1,
-          child: TextFormField(
-              controller: searchController,
-              decoration: const InputDecoration(labelText: 'Search for a user'),
-              onFieldSubmitted: (String _) {
-                setState(() {
-                  isShowUsers = true;
-                });
-              }),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 30, left: 30),
+            child: TextFormField(
+                controller: searchController,
+                decoration: const InputDecoration(
+                    icon: Icon(Icons.search), labelText: 'Search for a user'),
+                onFieldSubmitted: (String _) {
+                  setState(() {
+                    isShowUsers = true;
+                  });
+                }),
+          ),
         ),
         isShowUsers
             ? Expanded(

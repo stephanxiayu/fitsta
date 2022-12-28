@@ -35,7 +35,7 @@ class AuthMethode {
       UserCredential cred = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
 
-      String photourl = await StorageMethodes()
+      String profImage = await StorageMethodes()
           .uploadImageToStorage('profilePics', file, false);
 
       model.User user = model.User(
@@ -43,7 +43,7 @@ class AuthMethode {
         uid: cred.user!.uid,
         email: email,
         bio: bio,
-        photoUrl: photourl,
+        profImage: profImage,
         followers: [],
         following: [],
       );

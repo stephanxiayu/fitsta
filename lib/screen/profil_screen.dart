@@ -1,9 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitsta/Widget/follow_button.dart';
-import 'package:fitsta/resurces/auth_methode.dart';
 import 'package:fitsta/resurces/firestore_methodes.dart';
-import 'package:fitsta/screen/login_screen.dart';
 import 'package:fitsta/utilities/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -84,7 +82,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         children: [
                           CircleAvatar(
                             backgroundColor: Colors.grey,
-                            backgroundImage: NetworkImage(userData['photoUrl']),
+                            backgroundImage:
+                                NetworkImage(userData['profImage']),
                             radius: 40,
                           ),
                           Expanded(

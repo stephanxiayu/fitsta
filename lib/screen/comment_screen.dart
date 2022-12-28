@@ -64,7 +64,7 @@ class _CommentScreenState extends State<CommentScreen> {
         child: Row(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage(user.photoUrl),
+              backgroundImage: NetworkImage(user.profImage),
               radius: 18,
             ),
             Expanded(
@@ -84,7 +84,7 @@ class _CommentScreenState extends State<CommentScreen> {
                     _commentController.text,
                     user.uid,
                     user.username,
-                    user.photoUrl);
+                    user.profImage);
                 setState(() {
                   _commentController.text = '';
                 });

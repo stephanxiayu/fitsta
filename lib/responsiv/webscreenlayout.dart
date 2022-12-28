@@ -1,5 +1,6 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitsta/screen/add_post_screen.dart';
 import 'package:fitsta/screen/feed_screen.dart';
 import 'package:fitsta/screen/profil_screen.dart';
 import 'package:fitsta/screen/search_screen.dart';
@@ -14,41 +15,11 @@ class WebScreenLayout extends StatefulWidget {
 }
 
 class _WebScreenLayoutState extends State<WebScreenLayout> {
-  onItemTapped(int index) {
-    setState(() {
-      // _selectedIndex = index;
-    });
-  }
-
-  Widget getPage(int index) {
-    switch (index) {
-      case 0:
-        return const FeedScreen();
-
-      case 1:
-        return const SearchScreen();
-
-      // case 2:
-      //   return const AddPostScreen();
-
-      case 2:
-        return const Trainingspage();
-      case 3:
-        return ProfileScreen(
-          uid: FirebaseAuth.instance.currentUser!.uid,
-        );
-
-      default:
-        return Container();
-    }
-  }
-
   PageController page = PageController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       backgroundColor: Colors.teal,
       body: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -56,25 +27,25 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
           SideMenu(
             controller: page,
             style: SideMenuStyle(
-                // showTooltip: false,
+                showTooltip: false,
                 displayMode: SideMenuDisplayMode.auto,
-                hoverColor: Colors.blue[100],
-                selectedColor: Colors.lightBlue,
+                hoverColor: Colors.white12,
+                selectedColor: Colors.grey.shade900,
                 selectedTitleTextStyle: const TextStyle(color: Colors.white),
                 selectedIconColor: Colors.white,
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
                 ),
-                backgroundColor: Colors.blueGrey[700]),
+                backgroundColor: Colors.teal),
             title: Column(
               children: [
                 ConstrainedBox(
                   constraints: const BoxConstraints(
-                    maxHeight: 150,
-                    maxWidth: 150,
+                    maxHeight: 200,
+                    maxWidth: 350,
                   ),
                   child: Image.asset(
-                    'assets/images/easy_sidemenu.png',
+                    'assets/donat.jpg',
                   ),
                 ),
                 const Divider(
@@ -93,32 +64,32 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
             items: [
               SideMenuItem(
                 priority: 0,
-                title: 'Dashboard',
+                title: 'Home',
                 onTap: () {
                   page.jumpToPage(0);
                 },
                 icon: const Icon(Icons.home),
-                badgeContent: const Text(
-                  '3',
-                  style: TextStyle(color: Colors.white),
-                ),
-                tooltipContent: "This is a tooltip for Dashboard item",
+                // badgeContent: const Text(
+                //   '3',
+                //   style: TextStyle(color: Colors.white),
+                // ),
+                // tooltipContent: "This is a tooltip for Dashboard item",
               ),
               SideMenuItem(
                 priority: 1,
-                title: 'Users',
+                title: 'Search User',
                 onTap: () {
                   page.jumpToPage(1);
                 },
-                icon: const Icon(Icons.supervisor_account),
+                icon: const Icon(Icons.search),
               ),
               SideMenuItem(
                 priority: 2,
-                title: 'Files',
+                title: 'Add Foto',
                 onTap: () {
                   page.jumpToPage(2);
                 },
-                icon: const Icon(Icons.file_copy_rounded),
+                icon: const Icon(Icons.add_a_photo),
                 trailing: Container(
                     decoration: const BoxDecoration(
                         color: Colors.amber,
@@ -134,19 +105,19 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
               ),
               SideMenuItem(
                 priority: 3,
-                title: 'Download',
+                title: 'Trainingsdaten',
                 onTap: () {
                   page.jumpToPage(3);
                 },
-                icon: const Icon(Icons.download),
+                icon: const Icon(Icons.sports_volleyball),
               ),
               SideMenuItem(
                 priority: 4,
-                title: 'Settings',
+                title: 'Profil',
                 onTap: () {
                   page.jumpToPage(4);
                 },
-                icon: const Icon(Icons.settings),
+                icon: const Icon(Icons.person),
               ),
               // SideMenuItem(
               //   priority: 5,
@@ -173,32 +144,12 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
             child: PageView(
               controller: page,
               children: [
-                Container(
-                  color: Colors.white,
-                  child: const Center(
-                    child: Text(
-                      'Dashboard',
-                      style: TextStyle(fontSize: 35, color: Colors.black),
-                    ),
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  child: const Center(
-                    child: Text(
-                      'Users',
-                      style: TextStyle(fontSize: 35, color: Colors.black),
-                    ),
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  child: const Center(
-                    child: Text(
-                      'Files',
-                      style: TextStyle(fontSize: 35, color: Colors.black),
-                    ),
-                  ),
+                const FeedScreen(),
+                const SearchScreen(),
+                const AddPostScreen(),
+                const Trainingspage(),
+                ProfileScreen(
+                  uid: FirebaseAuth.instance.currentUser!.uid,
                 ),
                 Container(
                   color: Colors.white,
