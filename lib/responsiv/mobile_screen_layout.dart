@@ -6,6 +6,7 @@ import 'package:fitsta/screen/login_screen.dart';
 import 'package:fitsta/screen/profil_screen.dart';
 import 'package:fitsta/screen/search_screen.dart';
 import 'package:fitsta/screen/training.dart';
+import 'package:fitsta/utilities/colors.dart';
 import 'package:flutter/material.dart';
 
 class MobileScreenLayout extends StatefulWidget {
@@ -52,8 +53,10 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
-        title: const Text("App Bar Page"),
+        backgroundColor: mobileBackgroundColor,
+        title: _selectedIndex == 0
+            ? const Text("Home Feed")
+            : const Text("FitSta"),
         actions: [
           _selectedIndex == 3
               ? IconButton(

@@ -14,6 +14,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  TextEditingController textEditingController = TextEditingController();
   var userData = {};
   int postLen = 0;
   int followers = 0;
@@ -60,6 +62,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+  Future<void> editBio() async {
+    var editPost = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(widget.uid)
+        .update({'bio': textEditingController.text});
+    // await _firestore.collection('users').doc(postId).update({
+    //   'bio': textEditingController,
+    // });
+  }
+
+  Future<void> showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Bio bearbeiten'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                TextField(
+                  controller: textEditingController,
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Approve'),
+              onPressed: () {
+                editBio();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return isLoading
@@ -67,11 +109,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: CircularProgressIndicator(),
           )
         : Scaffold(
-            // appBar: AppBar(
-            //   backgroundColor: mobileBackgroundColor,
-            //   title: Text(userData['username']),
-            //   centerTitle: false,
-            // ),
             body: SafeArea(
               child: Column(
                 children: [
@@ -112,7 +149,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                 Colors.grey.shade900,
                                             textColor: Colors.white24,
                                             borderColor: Colors.grey,
-                                            function: () async {},
+                                            function: () async {
+                                              showMyDialog();
+                                            },
                                           )
                                         : isFollowing
                                             ? FollowButton(

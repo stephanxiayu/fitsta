@@ -20,7 +20,10 @@ class FeedScreen extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
+
         return ListView.builder(
+          shrinkWrap: true,
+          physics: const AlwaysScrollableScrollPhysics(),
           itemCount: snapshot.data!.docs.length,
           itemBuilder: (context, index) => PostCard(
             snap: snapshot.data!.docs[index].data(),

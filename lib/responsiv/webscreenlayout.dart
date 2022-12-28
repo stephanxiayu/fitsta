@@ -2,10 +2,13 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitsta/screen/add_post_screen.dart';
 import 'package:fitsta/screen/feed_screen.dart';
+import 'package:fitsta/screen/login_screen.dart';
 import 'package:fitsta/screen/profil_screen.dart';
 import 'package:fitsta/screen/search_screen.dart';
 import 'package:fitsta/screen/training.dart';
 import 'package:flutter/material.dart';
+
+import '../resurces/auth_methode.dart';
 
 class WebScreenLayout extends StatefulWidget {
   const WebScreenLayout({Key? key}) : super(key: key);
@@ -119,24 +122,15 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
                 },
                 icon: const Icon(Icons.person),
               ),
-              // SideMenuItem(
-              //   priority: 5,
-              //   onTap: () {
-              //     page.jumpToPage(5);
-              //   },
-              //   icon: const Icon(Icons.image_rounded),
-              // ),
-              // SideMenuItem(
-              //   priority: 6,
-              //   title: 'Only Title',
-              //   onTap: () {
-              //     page.jumpToPage(6);
-              //   },
-              // ),
-              const SideMenuItem(
+              SideMenuItem(
                 priority: 7,
                 title: 'Exit',
-                icon: Icon(Icons.exit_to_app),
+                icon: const Icon(Icons.exit_to_app),
+                onTap: () {
+                  AuthMethode().signOut().then((value) => Navigator.of(context)
+                      .push(MaterialPageRoute(
+                          builder: (context) => const LoginScreen())));
+                },
               ),
             ],
           ),
@@ -150,42 +144,6 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
                 const Trainingspage(),
                 ProfileScreen(
                   uid: FirebaseAuth.instance.currentUser!.uid,
-                ),
-                Container(
-                  color: Colors.white,
-                  child: const Center(
-                    child: Text(
-                      'Download',
-                      style: TextStyle(fontSize: 35, color: Colors.black),
-                    ),
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  child: const Center(
-                    child: Text(
-                      'Settings',
-                      style: TextStyle(fontSize: 35, color: Colors.black),
-                    ),
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  child: const Center(
-                    child: Text(
-                      'Only Title',
-                      style: TextStyle(fontSize: 35, color: Colors.black),
-                    ),
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  child: const Center(
-                    child: Text(
-                      'Only Icon',
-                      style: TextStyle(fontSize: 35, color: Colors.black),
-                    ),
-                  ),
                 ),
               ],
             ),
