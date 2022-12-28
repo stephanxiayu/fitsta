@@ -70,7 +70,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               leading: CircleAvatar(
                                 backgroundImage: NetworkImage(
                                     (snapshot.data! as dynamic).docs[index]
-                                        ['photoUrl']),
+                                        ['profImage']),
                               ),
                               title: Text((snapshot.data! as dynamic)
                                   .docs[index]['username']),
