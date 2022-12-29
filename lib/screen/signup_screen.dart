@@ -9,7 +9,6 @@ import 'package:fitsta/screen/login_screen.dart';
 import 'package:fitsta/utilities/colors.dart';
 import 'package:fitsta/utilities/utilities.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:image_picker/image_picker.dart';
 
@@ -87,34 +86,34 @@ class _SignupScreenState extends State<SignupScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(),
-            SvgPicture.asset(
-              "lib/assets/ic_instagram.svg",
-              color: primaryColor,
-              height: 64,
-            ),
             const SizedBox(
               height: 64,
             ),
-            Stack(
-              children: [
-                _image != null
-                    ? CircleAvatar(
-                        radius: 64,
-                        backgroundImage: MemoryImage(_image!),
-                      )
-                    : const CircleAvatar(
-                        radius: 64,
-                        backgroundImage: NetworkImage(
-                            "https://images.unsplash.com/photo-1593314731059-d6eb89748e65?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80"),
-                      ),
-                Positioned(
-                    bottom: -10,
-                    left: 80,
-                    child: IconButton(
-                      onPressed: selectImage,
-                      icon: const Icon(Icons.add_a_photo),
-                    ))
-              ],
+            GestureDetector(
+              onTap: selectImage,
+              child: Stack(
+                children: [
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 64,
+                          backgroundImage: MemoryImage(_image!),
+                        )
+                      : const CircleAvatar(
+                          radius: 64,
+                          backgroundImage: AssetImage("assets/profilpic.jpeg")),
+                  Positioned(
+                      bottom: 10,
+                      left: 80,
+                      child: IconButton(
+                        onPressed: selectImage,
+                        icon: const Icon(
+                          Icons.add_a_photo,
+                          size: 30,
+                          color: Colors.teal,
+                        ),
+                      ))
+                ],
+              ),
             ),
             const SizedBox(
               height: 24,
@@ -161,7 +160,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         Radius.circular(4),
                       ),
                     ),
-                    color: blueColor),
+                    color: Colors.teal),
                 child: _isLoading
                     ? const Center(
                         child: CircularProgressIndicator(
@@ -180,6 +179,9 @@ class _SignupScreenState extends State<SignupScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   child: const Text("Du hast schon einen Account?"),
+                ),
+                const SizedBox(
+                  width: 15,
                 ),
                 GestureDetector(
                   onTap: navigateToLogin,

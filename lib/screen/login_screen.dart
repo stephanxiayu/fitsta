@@ -8,7 +8,6 @@ import 'package:fitsta/utilities/colors.dart';
 import 'package:fitsta/utilities/global_varibles.dart';
 import 'package:fitsta/utilities/utilities.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -68,15 +67,20 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.only(top: 20),
+              child: Text(
+                "Willkommen bei FitSta",
+                style: TextStyle(color: Colors.white, fontSize: 25),
+              ),
+            ),
+          ),
           Flexible(
             flex: 2,
             child: Container(),
           ),
-          SvgPicture.asset(
-            "lib/assets/ic_instagram.svg",
-            color: primaryColor,
-            height: 64,
-          ),
+          Image.asset("assets/logo.png"),
           const SizedBox(
             height: 64,
           ),
@@ -108,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Radius.circular(4),
                     ),
                   ),
-                  color: blueColor),
+                  color: Colors.teal),
               child: _isLoading
                   ? const Center(
                       child: CircularProgressIndicator(
@@ -131,6 +135,9 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: const Text("noch keinen Account?"),
+              ),
+              const SizedBox(
+                width: 15,
               ),
               GestureDetector(
                 onTap: navigateToSignup,
