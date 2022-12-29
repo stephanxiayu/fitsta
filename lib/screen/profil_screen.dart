@@ -67,9 +67,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .collection('users')
         .doc(widget.uid)
         .update({'bio': textEditingController.text});
-    // await _firestore.collection('users').doc(postId).update({
-    //   'bio': textEditingController,
-    // });
   }
 
   Future<void> showMyDialog() async {

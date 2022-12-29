@@ -2,12 +2,41 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitsta/model/post.dart';
+import 'package:fitsta/model/trainingskachel.dart';
 import 'package:fitsta/resurces/store_methods.dart';
 
 import 'package:uuid/uuid.dart';
 
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<String> uploadTraining(
+    String description,
+    String postId,
+    String uid,
+    var datePublished,
+    String username,
+  ) async {
+    String res = "some error occurred";
+    try {
+      String postId = const Uuid().v1();
+
+      Trainingskachel training = Trainingskachel(
+        description: description,
+        uid: uid,
+        username: username,
+        postId: postId,
+        datePublished: DateTime.now(),
+      );
+
+      res = 'success';
+
+      _firestore.collection('training').doc(postId).set(training.toJason());
+    } catch (err) {
+      res = err.toString();
+    }
+    return res;
+  }
 
   Future<String> uploadPost(String description, Uint8List file, String uid,
       String username, String proImage, String profImage) async {
