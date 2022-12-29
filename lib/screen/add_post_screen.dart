@@ -113,6 +113,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
     });
   }
 
+  void snackBarButton() {
+    showSnackBar('Erst ein Foto hochladen!', context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final User user = Provider.of<UserProvider>(context).getUser;
@@ -135,8 +139,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       child: Card(
                         color: Colors.teal,
                         child: MaterialButton(
-                            onPressed: () => postImage(
-                                user.uid, user.username, user.profImage),
+                            onPressed: _file == null
+                                ? () => snackBarButton()
+                                : () => postImage(
+                                    user.uid, user.username, user.profImage),
                             child: const Text(
                               "Post",
                               style: TextStyle(

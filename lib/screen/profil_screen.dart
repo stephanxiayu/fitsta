@@ -78,7 +78,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
       barrierDismissible: false, // user must tap button!
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Bio bearbeiten'),
+          backgroundColor: mobileBackgroundColor,
+          title: const Text(
+            'Bio bearbeiten',
+            style: TextStyle(color: Colors.white),
+          ),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -90,7 +94,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Approve'),
+              child: const Text(
+                'jetzt Ändern',
+                style: TextStyle(color: Colors.teal),
+              ),
               onPressed: () {
                 editBio();
                 Navigator.of(context).pop();
