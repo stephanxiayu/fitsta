@@ -3,13 +3,13 @@ import 'package:fitsta/resurces/auth_methode.dart';
 import 'package:flutter/cupertino.dart';
 
 class UserProvider with ChangeNotifier {
-  User? _user;
+  Users? _user;
   final AuthMethode _authMethode = AuthMethode();
 
-  User get getUser => _user!;
+  Users get getUser => _user!;
 
   Future<void> refreshUser() async {
-    User user = await _authMethode.getUserDetails();
+    Users user = await _authMethode.getUserDetails();
     _user = user;
     notifyListeners();
   }

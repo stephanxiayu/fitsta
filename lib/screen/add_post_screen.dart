@@ -119,7 +119,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final User user = Provider.of<UserProvider>(context).getUser;
+    final Users user = Provider.of<UserProvider>(context).getUser;
 
     return Scaffold(
       body: SafeArea(

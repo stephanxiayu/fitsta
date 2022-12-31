@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitsta/Widget/follow_button.dart';
 import 'package:fitsta/resurces/firestore_methodes.dart';
+import 'package:fitsta/screen/progfil_ditailview.dart';
 import 'package:fitsta/utilities/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -247,10 +248,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             itemBuilder: (context, index) {
                               DocumentSnapshot snap =
                                   (snapshot.data! as dynamic).docs[index];
-                              return Container(
-                                child: Image(
-                                  image: NetworkImage(snap['postUrl']),
-                                  fit: BoxFit.cover,
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ProfilDetailView()));
+                                },
+                                child: Container(
+                                  child: Image(
+                                    image: NetworkImage(snap['postUrl']),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               );
                             });

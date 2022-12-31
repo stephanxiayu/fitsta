@@ -107,7 +107,7 @@ class _TrainingspageState extends State<Trainingspage> {
 
   @override
   Widget build(BuildContext context) {
-    User? user = Provider.of<UserProvider>(context).getUser;
+    Users? user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
         body: Column(
       children: [
